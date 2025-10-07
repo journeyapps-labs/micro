@@ -3,11 +3,7 @@
   "main": "./dist/index",
   "browser": "./dist/web",
   "typings": "./dist/index",
-<<<<<<< Updated upstream
   "version": "1.0.0",
-  "repository": "https://github.com/journeyapps-labs/journey-micro",
-=======
-  "version": "0.0.1",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -18,7 +14,6 @@
   },
   "author": "JOURNEYAPPS",
   "license": "Apache-2.0",
->>>>>>> Stashed changes
   "files": [
     "dist/**"
   ],
