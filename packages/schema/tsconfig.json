@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./more/schema/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../codecs"
+    },
+    {
+      "path": "../errors"
+    }
+  ]
+}

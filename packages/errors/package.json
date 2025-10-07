@@ -1,0 +1,17 @@
+{
+  "name": "@journeyapps-labs/micro-errors",
+  "main": "./dist/index",
+  "typings": "./dist/index",
+  "version": "0.0.1",
+  "repository": "https://github.com/journeyapps-labs/journey-micro",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.6",
+    "vitest": "^3.2.4"
+  }
+}

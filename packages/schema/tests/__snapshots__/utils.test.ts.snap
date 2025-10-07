@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`utils > allow additional properties in a json schema 1`] = `
+{
+  "definitions": {
+    "c": {
+      "properties": {
+        "prop": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "prop",
+      ],
+      "type": "object",
+    },
+  },
+  "properties": {
+    "b": {
+      "oneOf": [
+        {
+          "properties": {
+            "a": {
+              "type": "number",
+            },
+          },
+          "required": [
+            "a",
+          ],
+          "type": "object",
+        },
+      ],
+    },
+    "d": {
+      "$ref": "#/definitions/c",
+    },
+    "name": {
+      "properties": {
+        "a": {
+          "type": "string",
+        },
+        "b": {
+          "enum": [
+            "A",
+          ],
+        },
+      },
+      "required": [
+        "a",
+      ],
+      "type": "object",
+    },
+  },
+  "required": [
+    "name",
+    "b",
+  ],
+  "type": "object",
+}
+`;
+
+exports[`utils > it should only modify additionalProperties if it is a boolean 1`] = `
+{
+  "definitions": {
+    "a": {
+      "properties": {
+        "prop": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "prop",
+      ],
+      "type": "object",
+    },
+  },
+  "properties": {
+    "name": {
+      "additionalProperties": {
+        "$ref": "#/definitions/a",
+      },
+      "type": "object",
+    },
+  },
+  "required": [
+    "name",
+    "b",
+  ],
+  "type": "object",
+}
+`;

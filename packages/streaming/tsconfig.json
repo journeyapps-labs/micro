@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "rootDir": "src",
+    "lib": ["DOM", "ES2020"]
+  },
+  "include": ["src"],
+  "references": [
+    {
+      "path": "../errors"
+    },
+    {
+      "path": "../schema"
+    }
+  ]
+}

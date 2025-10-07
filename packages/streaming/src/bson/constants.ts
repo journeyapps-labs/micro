@@ -1,0 +1,1 @@
+export const TERMINATOR = Buffer.from([0x00, 0x00, 0x00, 0x00]);

@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parsers > should correctly generate Filterable schema from Object 1`] = `
+{
+  "decoded": {
+    "additionalProperties": false,
+    "definitions": {},
+    "properties": {
+      "test1": {
+        "anyOf": [
+          {
+            "type": "string",
+          },
+          {
+            "items": {
+              "type": "string",
+            },
+            "type": "array",
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "exists": {
+                "type": "boolean",
+              },
+            },
+            "required": [
+              "exists",
+            ],
+            "type": "object",
+          },
+        ],
+      },
+      "test2": {
+        "anyOf": [
+          {
+            "type": "number",
+          },
+          {
+            "items": {
+              "type": "number",
+            },
+            "type": "array",
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "exists": {
+                "type": "boolean",
+              },
+            },
+            "required": [
+              "exists",
+            ],
+            "type": "object",
+          },
+        ],
+      },
+    },
+    "required": [],
+    "type": "object",
+  },
+  "encoded": {
+    "additionalProperties": false,
+    "definitions": {},
+    "properties": {
+      "test1": {
+        "anyOf": [
+          {
+            "type": "string",
+          },
+          {
+            "items": {
+              "type": "string",
+            },
+            "type": "array",
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "exists": {
+                "type": "boolean",
+              },
+            },
+            "required": [
+              "exists",
+            ],
+            "type": "object",
+          },
+        ],
+      },
+      "test2": {
+        "anyOf": [
+          {
+            "type": "number",
+          },
+          {
+            "items": {
+              "type": "number",
+            },
+            "type": "array",
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "exists": {
+                "type": "boolean",
+              },
+            },
+            "required": [
+              "exists",
+            ],
+            "type": "object",
+          },
+        ],
+      },
+    },
+    "required": [],
+    "type": "object",
+  },
+}
+`;
+
+exports[`parsers > should correctly generate ObjectId schemas 1`] = `
+{
+  "decoded": {
+    "bsonType": "ObjectId",
+    "definitions": {},
+  },
+  "encoded": {
+    "definitions": {},
+    "type": "string",
+  },
+}
+`;
+
+exports[`parsers > should correctly generate ResourceId schemas 1`] = `
+{
+  "decoded": {
+    "definitions": {},
+    "properties": {
+      "_id": {
+        "bsonType": "ObjectId",
+      },
+    },
+    "required": [
+      "_id",
+    ],
+    "type": "object",
+  },
+  "encoded": {
+    "definitions": {},
+    "properties": {
+      "id": {
+        "type": "string",
+      },
+    },
+    "required": [
+      "id",
+    ],
+    "type": "object",
+  },
+}
+`;
+
+exports[`parsers > should correctly generate buffer schemas 1`] = `
+{
+  "decoded": {
+    "definitions": {},
+    "nodeType": "buffer",
+  },
+  "encoded": {
+    "definitions": {},
+    "type": "string",
+  },
+}
+`;
+
+exports[`parsers > should correctly generate date schemas 1`] = `
+{
+  "decoded": {
+    "definitions": {},
+    "nodeType": "date",
+  },
+  "encoded": {
+    "definitions": {},
+    "type": "string",
+  },
+}
+`;
