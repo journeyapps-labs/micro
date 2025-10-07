@@ -65,7 +65,10 @@ export const extractHeaderFromStream = async <T = any>(
   }
 };
 
-export async function* prependHeaderToStream(header: any, input_stream: Iterable<Buffer> | AsyncIterable<Buffer>) {
+export async function* prependHeaderToStream<T>(
+  header: any,
+  input_stream: Iterable<T> | AsyncIterable<T>
+): AsyncGenerator<T | Uint8Array> {
   yield bson.serialize(header);
   yield* input_stream;
 }
