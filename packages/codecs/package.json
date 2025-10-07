@@ -2,7 +2,7 @@
   "name": "@journeyapps-labs/micro-codecs",
   "main": "./dist/index",
   "typings": "./dist/index",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": "https://github.com/journeyapps-labs/journey-micro",
   "files": [
     "dist/**"
