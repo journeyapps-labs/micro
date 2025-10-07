@@ -1,5 +1,5 @@
-import * as buffer_array from "./buffer-array";
-import * as bson from "bson";
+import * as buffer_array from './buffer-array';
+import * as bson from 'bson';
 
 export type DecodedResponse<T> = {
   header: T;
@@ -11,17 +11,14 @@ export type ExtractHeaderParams = {
 };
 export const extractHeaderFromStream = async <T = any>(
   input_stream: AsyncIterable<Buffer>,
-  params?: ExtractHeaderParams,
+  params?: ExtractHeaderParams
 ): Promise<DecodedResponse<T>> => {
   const iterator = input_stream[Symbol.asyncIterator]();
 
   const buffer = buffer_array.createReadableBufferArray();
   let frame_size: number | null = null;
 
-  async function* resplice(
-    data: Buffer | null,
-    iterator: AsyncIterator<Buffer>,
-  ) {
+  async function* resplice(data: Buffer | null, iterator: AsyncIterator<Buffer>) {
     if (data) {
       yield data;
     }
@@ -39,7 +36,7 @@ export const extractHeaderFromStream = async <T = any>(
   while (true) {
     const chunk = await iterator.next();
     if (chunk.done) {
-      throw new Error("Stream did not complete successfully");
+      throw new Error('Stream did not complete successfully');
     }
 
     buffer.push(chunk.value);
@@ -58,20 +55,17 @@ export const extractHeaderFromStream = async <T = any>(
 
     const header = bson.deserialize(frame, {
       promoteBuffers: true,
-      ...(params?.deserialize_options || {}),
+      ...(params?.deserialize_options || {})
     });
 
     return {
       header: header as T,
-      stream: resplice(buffer.read(buffer.size()), iterator),
+      stream: resplice(buffer.read(buffer.size()), iterator)
     };
   }
 };
 
-export async function* prependHeaderToStream(
-  header: any,
-  input_stream: Iterable<Buffer> | AsyncIterable<Buffer>,
-) {
+export async function* prependHeaderToStream(header: any, input_stream: Iterable<Buffer> | AsyncIterable<Buffer>) {
   yield bson.serialize(header);
   yield* input_stream;
 }

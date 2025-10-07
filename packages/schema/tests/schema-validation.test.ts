@@ -1,34 +1,34 @@
-import { describe, test, it, expect } from "vitest";
+import { describe, test, it, expect } from 'vitest';
 
-import base_schema from "./fixtures/schema";
-import * as micro_schema from "../src";
+import base_schema from './fixtures/schema';
+import * as micro_schema from '../src';
 
 const base_validator = micro_schema.createSchemaValidator(base_schema);
 
-describe("json-schema-validation", () => {
-  test("passes validation for json-schema", () => {
+describe('json-schema-validation', () => {
+  test('passes validation for json-schema', () => {
     const result = base_validator.validate({
       name: {
-        a: "1",
-        b: "A",
+        a: '1',
+        b: 'A'
       },
       b: {
-        a: 2,
-      },
+        a: 2
+      }
     });
 
     expect(result).toMatchSnapshot();
   });
 
-  test("fails validation for json-schema", () => {
+  test('fails validation for json-schema', () => {
     const result1 = base_validator.validate({
       name: {
-        a: "1",
-        b: "B",
+        a: '1',
+        b: 'B'
       },
       b: {
-        a: 2,
-      },
+        a: 2
+      }
     });
 
     expect(result1).toMatchSnapshot();
@@ -36,59 +36,59 @@ describe("json-schema-validation", () => {
     const result2 = base_validator.validate({
       name: {},
       b: {
-        a: "",
-      },
+        a: ''
+      }
     });
 
     expect(result2).toMatchSnapshot();
   });
 
-  test("passes validation with refs", () => {
+  test('passes validation with refs', () => {
     const result = base_validator.validate({
       name: {
-        a: "1",
-        b: "A",
+        a: '1',
+        b: 'A'
       },
       b: {
-        a: 2,
+        a: 2
       },
       d: {
-        prop: "abc",
-      },
+        prop: 'abc'
+      }
     });
 
     expect(result).toMatchSnapshot();
   });
 
-  test("fails validation for json-schema due to additional properties", () => {
+  test('fails validation for json-schema due to additional properties', () => {
     const result = base_validator.validate({
       name: {
-        a: "1",
-        b: "A",
-        c: "additional property",
+        a: '1',
+        b: 'A',
+        c: 'additional property'
       },
       b: {
-        a: 2,
-      },
+        a: 2
+      }
     });
 
     expect(result).toMatchSnapshot();
   });
 
-  test("passes json-schema validation with additional properties when allowed", () => {
+  test('passes json-schema validation with additional properties when allowed', () => {
     const validator = micro_schema.createSchemaValidator(base_schema, {
-      allowAdditional: true,
+      allowAdditional: true
     });
 
     const result = validator.validate({
       name: {
-        a: "1",
-        b: "A",
-        c: "additional property",
+        a: '1',
+        b: 'A',
+        c: 'additional property'
       },
       b: {
-        a: 2,
-      },
+        a: 2
+      }
     });
 
     expect(result).toMatchSnapshot();
@@ -97,79 +97,79 @@ describe("json-schema-validation", () => {
   const subschema = micro_schema.parseJSONSchema({
     definitions: {
       a: {
-        type: "string",
+        type: 'string'
       },
       b: {
-        type: "object",
+        type: 'object',
         properties: {
-          a: { type: "string" },
-          b: { $ref: "#/definitions/a" },
+          a: { type: 'string' },
+          b: { $ref: '#/definitions/a' }
         },
-        required: ["b"],
-      },
-    },
+        required: ['b']
+      }
+    }
   });
 
-  test("it should correctly validate subschemas", () => {
+  test('it should correctly validate subschemas', () => {
     const validator = subschema.definitions.b.validator();
 
     const res1 = validator.validate({
-      a: "a",
-      b: 1,
+      a: 'a',
+      b: 1
     });
     expect(res1).toMatchSnapshot();
 
     const res2 = validator.validate({
-      a: "a",
-      b: "b",
+      a: 'a',
+      b: 'b'
     });
 
     expect(res2.valid).toBe(true);
   });
 
-  test("it correctly validates node types", () => {
+  test('it correctly validates node types', () => {
     const validator = micro_schema.createSchemaValidator({
-      type: "object",
+      type: 'object',
       properties: {
         a: {
-          nodeType: "buffer",
+          nodeType: 'buffer'
         },
         b: {
-          nodeType: "date",
-        },
+          nodeType: 'date'
+        }
       },
-      required: ["a"],
+      required: ['a']
     });
 
     const res = validator.validate({
-      a: Buffer.from("123"),
-      b: new Date(),
+      a: Buffer.from('123'),
+      b: new Date()
     });
     expect(res.valid).toBe(true);
 
     const res2 = validator.validate({
-      a: "123",
+      a: '123'
     });
     expect(res2.valid).toBe(false);
     expect(res2).toMatchSnapshot();
   });
 
-  it("should fail to compile invalid node types", () => {
+  it('should fail to compile invalid node types', () => {
     try {
       micro_schema.createSchemaValidator({
-        type: "object",
+        type: 'object',
         properties: {
           a: {
-            nodeType: "Buffer",
+            nodeType: 'Buffer'
           },
           b: {
-            nodeType: "Date",
+            nodeType: 'Date'
           },
           c: {
-            nodeType: "unknown",
-          },
+            nodeType: 'unknown'
+          }
         },
-        required: ["a", "b", "c"],
+        required: ['a', 'b', 'c']
       });
     } catch (err) {
       expect(err).toBeInstanceOf(micro_schema.SchemaValidatorError);

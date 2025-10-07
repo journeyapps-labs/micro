@@ -1,7 +1,7 @@
-import * as buffer_array from "./buffer-array";
-import * as stream from "../core/cross-stream";
-import * as constants from "./constants";
-import * as bson from "bson";
+import * as buffer_array from './buffer-array';
+import * as stream from '../core/cross-stream';
+import * as constants from './constants';
+import * as bson from 'bson';
 
 export type BSONStreamDecoderParams<T> = {
   deserialize_options?: bson.DeserializeOptions;
@@ -10,9 +10,7 @@ export type BSONStreamDecoderParams<T> = {
   writableStrategy?: QueuingStrategy<Buffer | undefined>;
   readableStrategy?: QueuingStrategy<T | undefined>;
 };
-export const createBSONStreamDecoder = <T = any>(
-  params?: BSONStreamDecoderParams<T>,
-) => {
+export const createBSONStreamDecoder = <T = any>(params?: BSONStreamDecoderParams<T>) => {
   const buffer = buffer_array.createReadableBufferArray();
   let frame_size: null | number = null;
 
@@ -37,9 +35,9 @@ export const createBSONStreamDecoder = <T = any>(
       yield bson.deserialize(frame, {
         promoteBuffers: true,
         validation: {
-          utf8: false,
+          utf8: false
         },
-        ...(params?.deserialize_options || {}),
+        ...(params?.deserialize_options || {})
       });
     }
   }
@@ -47,7 +45,7 @@ export const createBSONStreamDecoder = <T = any>(
   let writableStrategy = params?.writableStrategy;
   if (!writableStrategy) {
     writableStrategy = new stream.ByteLengthStrategy({
-      highWaterMark: 1024 * 16,
+      highWaterMark: 1024 * 16
     });
   }
 
@@ -72,10 +70,10 @@ export const createBSONStreamDecoder = <T = any>(
           return;
         }
 
-        throw new Error("stream did not complete successfully");
-      },
+        throw new Error('stream did not complete successfully');
+      }
     },
     writableStrategy,
-    params?.readableStrategy,
+    params?.readableStrategy
   );
 };

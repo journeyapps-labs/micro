@@ -1,34 +1,34 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect } from 'vitest';
 
-import * as micro_schema from "../src";
-import * as t from "zod";
+import * as micro_schema from '../src';
+import * as t from 'zod';
 
-describe("zod-validation", () => {
+describe('zod-validation', () => {
   const schema = t.object({
     name: t.string(),
     surname: t.string(),
     other: t.object({
       a: t.array(t.string()),
-      b: t.literal("optional").optional(),
-    }),
+      b: t.literal('optional').optional()
+    })
   });
 
-  test("passes validation for runtime codec", () => {
+  test('passes validation for runtime codec', () => {
     const validator = micro_schema.createZodValidator(schema);
 
     const result = validator.validate({
-      name: "a",
-      surname: "b",
+      name: 'a',
+      surname: 'b',
       other: {
-        a: ["nice"],
-        b: "optional",
-      },
+        a: ['nice'],
+        b: 'optional'
+      }
     });
 
     expect(result).toMatchSnapshot();
   });
 
-  test("fails validation for runtime codec", () => {
+  test('fails validation for runtime codec', () => {
     const validator = micro_schema.createZodValidator(schema);
 
     const result = validator.validate({
@@ -36,8 +36,8 @@ describe("zod-validation", () => {
       name: 1,
       other: {
         // @ts-ignore
-        b: "op",
-      },
+        b: 'op'
+      }
     });
 
     expect(result).toMatchSnapshot();

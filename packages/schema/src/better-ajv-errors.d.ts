@@ -1,5 +1,5 @@
-declare module "better-ajv-errors" {
-  import type { ErrorObject } from "ajv";
+declare module 'better-ajv-errors' {
+  import type { ErrorObject } from 'ajv';
 
   export interface IOutputError {
     start: { line: number; column: number; offset: number };
@@ -10,7 +10,7 @@ declare module "better-ajv-errors" {
   }
 
   export interface IInputOptions {
-    format?: "cli" | "js";
+    format?: 'cli' | 'js';
     indent?: number | null;
 
     /** Raw JSON used when highlighting error location */
@@ -21,6 +21,6 @@ declare module "better-ajv-errors" {
     schema: S,
     data: T,
     errors: Array<ErrorObject>,
-    options?: Options,
-  ): Options extends { format: "js" } ? Array<IOutputError> : string;
+    options?: Options
+  ): Options extends { format: 'js' } ? Array<IOutputError> : string;
 }

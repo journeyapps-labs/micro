@@ -1,4 +1,4 @@
-import { ErrorData, JourneyError } from "./errors";
+import { ErrorData, JourneyError } from './errors';
 
 export const isJourneyError = (err: any): err is JourneyError => {
   const matches = err instanceof JourneyError || err.is_journey_error;

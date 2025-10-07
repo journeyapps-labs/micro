@@ -1,5 +1,5 @@
-import * as querystring from "querystring";
-import * as express from "express";
+import * as querystring from 'querystring';
+import * as express from 'express';
 
 /**
  * Parse an incoming request decoding a base64 encoded, JSON formatted `payload` query string
@@ -15,20 +15,16 @@ import * as express from "express";
  *
  * @deprecated
  */
-export const streamedRequestBodyParser = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction,
-) => {
+export const streamedRequestBodyParser = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try {
     let payload = req.query.payload;
     if (!payload) {
       return next();
     }
-    if (typeof payload !== "string") {
+    if (typeof payload !== 'string') {
       return next();
     }
-    req.body = JSON.parse(Buffer.from(payload, "base64").toString());
+    req.body = JSON.parse(Buffer.from(payload, 'base64').toString());
     delete req.query.payload;
 
     next();
@@ -45,9 +41,7 @@ export const streamedRequestBodyParser = (
  * @deprecated
  */
 export const encodeStreamingPayload = (data: object) => {
-  return querystring.escape(
-    Buffer.from(JSON.stringify(data)).toString("base64"),
-  );
+  return querystring.escape(Buffer.from(JSON.stringify(data)).toString('base64'));
 };
 
 /**

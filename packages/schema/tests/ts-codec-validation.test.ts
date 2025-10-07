@@ -1,12 +1,12 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect } from 'vitest';
 
-import * as micro_schema from "../src";
-import * as t from "ts-codec";
+import * as micro_schema from '../src';
+import * as t from 'ts-codec';
 
-describe("ts-codec validation", () => {
+describe('ts-codec validation', () => {
   enum Values {
-    A = "A",
-    B = "B",
+    A = 'A',
+    B = 'B'
   }
 
   const codec = t.object({
@@ -14,7 +14,7 @@ describe("ts-codec validation", () => {
     surname: t.string,
     other: t.object({
       a: t.array(t.string),
-      b: t.literal("optional").optional(),
+      b: t.literal('optional').optional()
     }),
     tuple: t.tuple([t.string, t.number]),
     or: t.number.or(t.string),
@@ -22,80 +22,80 @@ describe("ts-codec validation", () => {
 
     complex: t
       .object({
-        a: t.string,
+        a: t.string
       })
       .and(
         t.object({
-          b: t.number,
-        }),
+          b: t.number
+        })
       )
       .and(
         t.object({
           c: t
             .object({
-              a: t.string,
+              a: t.string
             })
             .and(
               t
                 .object({
-                  b: t.boolean,
+                  b: t.boolean
                 })
                 .or(
                   t.object({
-                    c: t.number,
-                  }),
-                ),
-            ),
-        }),
-      ),
+                    c: t.number
+                  })
+                )
+            )
+        })
+      )
   });
 
-  test("passes validation for codec", () => {
+  test('passes validation for codec', () => {
     const validator = micro_schema.createTsCodecValidator(codec);
 
     const result = validator.validate({
-      name: "a",
-      surname: "b",
+      name: 'a',
+      surname: 'b',
       other: {
-        a: ["nice"],
-        b: "optional",
+        a: ['nice'],
+        b: 'optional'
       },
-      tuple: ["string", 1],
+      tuple: ['string', 1],
       or: 1,
       enum: Values.A,
 
       complex: {
-        a: "",
+        a: '',
         b: 1,
         c: {
-          a: "",
-          b: true,
-        },
-      },
+          a: '',
+          b: true
+        }
+      }
     });
 
     expect(result.valid).toBe(true);
   });
 
-  test("fails validation for runtime codec", () => {
+  test('fails validation for runtime codec', () => {
     const validator = micro_schema.createTsCodecValidator(codec);
 
     const result = validator.validate({
       // @ts-ignore
       name: 1,
       other: {
-        a: ["nice"],
+        a: ['nice'],
         // @ts-ignore
-        b: "op",
+        b: 'op'
       },
       // @ts-ignore
       tuple: [1, 1],
       // @ts-ignore
-      enum: "c",
+      enum: 'c',
       // @ts-ignore
       or: [],
       // @ts-ignore
-      complex: {},
+      complex: {}
     });
 
     expect(result).toMatchSnapshot();

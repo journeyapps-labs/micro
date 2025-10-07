@@ -1,49 +1,49 @@
 export default {
   definitions: {
     c: {
-      type: "object",
+      type: 'object',
       properties: {
         prop: {
-          type: "string",
-        },
+          type: 'string'
+        }
       },
-      required: ["prop"],
-    },
+      required: ['prop']
+    }
   },
 
-  type: "object",
+  type: 'object',
   properties: {
     name: {
-      type: "object",
+      type: 'object',
       properties: {
         a: {
-          type: "string",
+          type: 'string'
         },
         b: {
-          enum: ["A"],
-        },
+          enum: ['A']
+        }
       },
-      required: ["a"],
-      additionalProperties: false,
+      required: ['a'],
+      additionalProperties: false
     },
     b: {
       oneOf: [
         {
-          type: "object",
+          type: 'object',
           properties: {
             a: {
-              type: "number",
-            },
+              type: 'number'
+            }
           },
-          required: ["a"],
-          additionalProperties: false,
-        },
-      ],
+          required: ['a'],
+          additionalProperties: false
+        }
+      ]
     },
     d: {
-      $ref: "#/definitions/c",
-    },
+      $ref: '#/definitions/c'
+    }
   },
-  required: ["name", "b"],
-  additionalProperties: false,
+  required: ['name', 'b'],
+  additionalProperties: false
 };

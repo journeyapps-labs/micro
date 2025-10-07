@@ -12,7 +12,7 @@ export const readBufferFromChunks = (chunks: Buffer[], size: number) => {
     if (current_size >= size) {
       return {
         buffer: Buffer.concat(batch),
-        chunks_read: batch.length,
+        chunks_read: batch.length
       };
     }
   }
@@ -25,10 +25,7 @@ export const readBufferFromChunks = (chunks: Buffer[], size: number) => {
  *
  * If more than `size` is read from the chunks array then the remainder is unshifted back onto the array
  */
-export const readBufferFromChunksAndModify = (
-  chunks: Buffer[],
-  size: number,
-): Buffer | null => {
+export const readBufferFromChunksAndModify = (chunks: Buffer[], size: number): Buffer | null => {
   const res = readBufferFromChunks(chunks, size);
   if (!res) {
     return null;
@@ -54,9 +51,7 @@ export const createReadableBufferArray = () => {
   let current_size = 0;
   return {
     push(...new_chunks: Array<Uint8Array | Buffer>) {
-      const normalized_chunks = new_chunks.map((chunk) =>
-        Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk),
-      );
+      const normalized_chunks = new_chunks.map((chunk) => (Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
       chunks.push(...normalized_chunks);
       current_size = new_chunks.reduce((size, chunk) => {
         return size + chunk.length;
@@ -84,7 +79,7 @@ export const createReadableBufferArray = () => {
     },
     size() {
       return current_size;
-    },
+    }
   };
 };
 

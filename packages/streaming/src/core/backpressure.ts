@@ -1,4 +1,4 @@
-import * as stream from "stream";
+import * as stream from 'stream';
 
 export type SimpleReadableLike = stream.Readable | stream.Transform;
 
@@ -29,9 +29,9 @@ export const push = async (readable: SimpleReadableLike, data: any) => {
       resolve();
     };
 
-    readable.once("error", errorHandler);
-    readable.once("drain", () => {
-      readable.removeListener("error", errorHandler);
+    readable.once('error', errorHandler);
+    readable.once('drain', () => {
+      readable.removeListener('error', errorHandler);
       resolve();
     });
   });

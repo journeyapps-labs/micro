@@ -1,40 +1,40 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect } from 'vitest';
 
-import * as utils from "../src/utils";
-import schema from "./fixtures/schema";
+import * as utils from '../src/utils';
+import schema from './fixtures/schema';
 
-describe("utils", () => {
-  test("allow additional properties in a json schema", () => {
+describe('utils', () => {
+  test('allow additional properties in a json schema', () => {
     const cleaned_schema = utils.allowAdditionalProperties(schema);
     expect(cleaned_schema).toMatchSnapshot();
   });
 
-  test("it should only modify additionalProperties if it is a boolean", () => {
+  test('it should only modify additionalProperties if it is a boolean', () => {
     const cleaned_schema = utils.allowAdditionalProperties({
       definitions: {
         a: {
-          type: "object",
+          type: 'object',
           properties: {
             prop: {
-              type: "string",
-            },
+              type: 'string'
+            }
           },
           additionalProperties: false,
-          required: ["prop"],
-        },
+          required: ['prop']
+        }
       },
 
-      type: "object",
+      type: 'object',
       properties: {
         name: {
-          type: "object",
+          type: 'object',
           additionalProperties: {
-            $ref: "#/definitions/a",
-          },
-        },
+            $ref: '#/definitions/a'
+          }
+        }
       },
-      required: ["name", "b"],
-      additionalProperties: false,
+      required: ['name', 'b'],
+      additionalProperties: false
     });
     expect(cleaned_schema).toMatchSnapshot();
   });

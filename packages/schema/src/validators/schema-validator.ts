@@ -1,8 +1,8 @@
-import * as keywords from "../json-schema/keywords";
-import AjvErrorFormatter from "better-ajv-errors";
-import * as defs from "../definitions";
-import * as utils from "../utils";
-import AJV, * as ajv from "ajv";
+import * as keywords from '../json-schema/keywords';
+import AjvErrorFormatter from 'better-ajv-errors';
+import * as defs from '../definitions';
+import * as utils from '../utils';
+import AJV, * as ajv from 'ajv';
 
 export class SchemaValidatorError extends Error {
   constructor(message: string) {
@@ -33,13 +33,13 @@ export type CreateSchemaValidatorParams = {
  */
 export const createSchemaValidator = <T = any>(
   schema: defs.JSONSchema,
-  params: CreateSchemaValidatorParams = {},
+  params: CreateSchemaValidatorParams = {}
 ): SchemaValidator<T> => {
   try {
     const ajv = new AJV({
       allErrors: !(params.fail_fast ?? false),
       keywords: [keywords.BufferNodeType],
-      ...(params.ajv || {}),
+      ...(params.ajv || {})
     });
 
     let processed_schema = schema;
@@ -58,25 +58,20 @@ export const createSchemaValidator = <T = any>(
         const valid = validator(data);
 
         if (!valid) {
-          const errors = AjvErrorFormatter(
-            processed_schema,
-            data,
-            validator.errors || [],
-            {
-              format: "js",
-            },
-          )?.map((error) => error.error);
+          const errors = AjvErrorFormatter(processed_schema, data, validator.errors || [], {
+            format: 'js'
+          })?.map((error) => error.error);
 
           return {
             valid: false,
-            errors: errors || [],
+            errors: errors || []
           };
         }
 
         return {
-          valid: true,
+          valid: true
         };
-      },
+      }
     };
   } catch (err) {
     // Here we re-throw the error because the original error thrown by AJV has a deep stack that

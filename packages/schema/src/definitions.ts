@@ -12,9 +12,7 @@ export type ValidationLeft<T = string[]> = {
   errors: T;
 };
 
-export type ValidationResponse<T, E = string[]> =
-  | ValidationLeft<E>
-  | IValidationRight;
+export type ValidationResponse<T, E = string[]> = ValidationLeft<E> | IValidationRight;
 
 export type MicroValidator<T = any, E = string[]> = {
   validate: (data: T) => ValidationResponse<T, E>;

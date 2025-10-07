@@ -1,82 +1,82 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect } from 'vitest';
 
-import * as micro_schema from "../src";
+import * as micro_schema from '../src';
 
-describe("schema-tools", () => {
-  test("it should correctly prune unused definitions", () => {
+describe('schema-tools', () => {
+  test('it should correctly prune unused definitions', () => {
     const schema = micro_schema.parseJSONSchema({
       definitions: {
         // unused, should be stripped out
         a: {
-          type: "object",
+          type: 'object',
           properties: {
             prop: {
-              type: "string",
-            },
+              type: 'string'
+            }
           },
-          required: ["prop"],
+          required: ['prop']
         },
 
         // extended reference, should be included after walking the full schema
         b: {
-          type: "object",
+          type: 'object',
           properties: {
             prop: {
-              type: "string",
-            },
+              type: 'string'
+            }
           },
-          required: ["prop"],
+          required: ['prop']
         },
         b1: {
-          type: "object",
+          type: 'object',
           properties: {
             prop: {
-              $ref: "#/definitions/b",
-            },
+              $ref: '#/definitions/b'
+            }
           },
-          required: ["prop"],
+          required: ['prop']
         },
 
         // circular reference, should not result in the walker getting stuck
         c: {
-          type: "object",
+          type: 'object',
           properties: {
             prop: {
-              $ref: "#/definitions/c",
-            },
+              $ref: '#/definitions/c'
+            }
           },
-          required: ["prop"],
-        },
+          required: ['prop']
+        }
       },
 
-      type: "object",
+      type: 'object',
       properties: {
         a: {
-          type: "object",
+          type: 'object',
           properties: {
             a: {
-              $ref: "#/definitions/b1",
+              $ref: '#/definitions/b1'
             },
             b: {
-              enum: ["A"],
-            },
-          },
+              enum: ['A']
+            }
+          }
         },
         b: {
           oneOf: [
             {
-              type: "object",
+              type: 'object',
               properties: {
                 a: {
-                  $ref: "#/definitions/c",
-                },
+                  $ref: '#/definitions/c'
+                }
               },
-              required: ["a"],
-              additionalProperties: false,
-            },
-          ],
-        },
-      },
+              required: ['a'],
+              additionalProperties: false
+            }
+          ]
+        }
+      }
     });
 
     expect(schema.compile()).toMatchSnapshot();

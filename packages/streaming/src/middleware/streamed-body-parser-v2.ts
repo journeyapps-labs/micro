@@ -1,11 +1,11 @@
-declare module "express" {
+declare module 'express' {
   interface Request {
     stream?: AsyncIterable<Buffer>;
   }
 }
 
-import * as stream_headers from "../bson/header";
-import * as express from "express";
+import * as stream_headers from '../bson/header';
+import * as express from 'express';
 
 /**
  * Parse an incoming request by decoding the body as a bson stream. This will read the first
@@ -15,15 +15,14 @@ import * as express from "express";
 export const streamedRequestBodyParserV2 = async (
   req: express.Request,
   _: express.Response,
-  next: express.NextFunction,
+  next: express.NextFunction
 ) => {
   try {
-    if (!req.is("application/*+header")) {
+    if (!req.is('application/*+header')) {
       return next();
     }
 
-    const { header, stream } =
-      await stream_headers.extractHeaderFromStream(req);
+    const { header, stream } = await stream_headers.extractHeaderFromStream(req);
 
     req.stream = stream;
     req.body = header;

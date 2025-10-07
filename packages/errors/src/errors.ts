@@ -13,9 +13,9 @@
  */
 
 export enum ErrorSeverity {
-  INFO = "info",
-  WARNING = "warning",
-  ERROR = "error",
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error'
 }
 
 export type ErrorData = {
@@ -78,7 +78,7 @@ export class JourneyError extends Error {
   }
 
   toJSON(): ErrorData {
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV !== 'production') {
       return this.errorData;
     }
     return {
@@ -89,7 +89,7 @@ export class JourneyError extends Error {
       details: this.errorData.details,
       trace_id: this.errorData.trace_id,
       severity: this.errorData.severity,
-      origin: this.errorData.origin,
+      origin: this.errorData.origin
     };
   }
 
@@ -99,46 +99,46 @@ export class JourneyError extends Error {
 }
 
 export class ValidationError extends JourneyError {
-  static CODE = "VALIDATION_ERROR";
+  static CODE = 'VALIDATION_ERROR';
   constructor(errors: any) {
     super({
       code: ValidationError.CODE,
       status: 400,
-      description: "Validation failed",
+      description: 'Validation failed',
       details: JSON.stringify(errors),
-      report: false,
+      report: false
     });
   }
 }
 
 export class AuthorizationError extends JourneyError {
-  static CODE = "AUTHORIZATION";
+  static CODE = 'AUTHORIZATION';
   constructor(errors: any) {
     super({
       code: AuthorizationError.CODE,
       status: 401,
-      description: "Authorization failed",
-      details: errors,
+      description: 'Authorization failed',
+      details: errors
     });
   }
 }
 
 export class InternalServerError extends JourneyError {
-  static CODE = "INTERNAL_SERVER_ERROR";
+  static CODE = 'INTERNAL_SERVER_ERROR';
   constructor(err: Error) {
     super({
       code: InternalServerError.CODE,
       severity: ErrorSeverity.ERROR,
       status: 500,
-      description: "Something went wrong",
+      description: 'Something went wrong',
       details: err.message,
-      stack: process.env.NODE_ENV !== "production" ? err.stack : undefined,
+      stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined
     });
   }
 }
 
 export class ResourceNotFound extends JourneyError {
-  static CODE = "RESOURCE_NOT_FOUND";
+  static CODE = 'RESOURCE_NOT_FOUND';
 
   /**
    * @deprecated Use the (resource, id) constructor instead.
@@ -152,23 +152,23 @@ export class ResourceNotFound extends JourneyError {
     super({
       code: ResourceNotFound.CODE,
       status: 404,
-      description: "The requested resource does not exist on this server",
+      description: 'The requested resource does not exist on this server',
       details: `The resource ${combinedId} does not exist on this server`,
-      severity: ErrorSeverity.INFO,
+      severity: ErrorSeverity.INFO
     });
   }
 }
 
 export class ResourceConflict extends JourneyError {
-  static CODE = "RESOURCE_CONFLICT";
+  static CODE = 'RESOURCE_CONFLICT';
 
   constructor(details: string) {
     super({
       code: ResourceConflict.CODE,
       status: 409,
-      description: "The specified resource already exists on this server",
+      description: 'The specified resource already exists on this server',
       details: details,
-      severity: ErrorSeverity.INFO,
+      severity: ErrorSeverity.INFO
     });
   }
 }

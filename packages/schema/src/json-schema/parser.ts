@@ -1,5 +1,5 @@
-import * as schema_validator from "../validators/schema-validator";
-import * as defs from "../definitions";
+import * as schema_validator from '../validators/schema-validator';
+import * as defs from '../definitions';
 
 /**
  * Recursively walk a given schema resolving a list of refs that are actively used in some way by the
@@ -11,11 +11,7 @@ import * as defs from "../definitions";
  *
  * We don't use this here as it resolves to a Promise, which we want to avoid for this tool
  */
-export const findUsedRefs = (
-  schema: any,
-  definitions = schema.definitions,
-  cache: string[] = [],
-): string[] => {
+export const findUsedRefs = (schema: any, definitions = schema.definitions, cache: string[] = []): string[] => {
   if (Array.isArray(schema)) {
     return schema
       .map((subschema) => {
@@ -24,19 +20,19 @@ export const findUsedRefs = (
       .flat();
   }
 
-  if (typeof schema === "object") {
+  if (typeof schema === 'object') {
     return Object.keys(schema).reduce((used: string[], key) => {
       const value = schema[key];
-      if (key === "$ref") {
+      if (key === '$ref') {
         if (cache.includes(value)) {
           return used;
         }
         cache.push(value);
-        const subschema = definitions[value.replace("#/definitions/", "")];
+        const subschema = definitions[value.replace('#/definitions/', '')];
         used.push(value, ...findUsedRefs(subschema, definitions, cache));
         return used;
       }
-      if (key === "definitions") {
+      if (key === 'definitions') {
         return used;
       }
       return used.concat(findUsedRefs(value, definitions, cache));
@@ -51,10 +47,7 @@ export const findUsedRefs = (
  * definition keys that are referenced in some way, either directly or indirectly, by the
  * root schema
  */
-export const pruneDefinitions = (
-  definitions: Record<string, any>,
-  refs: string[],
-) => {
+export const pruneDefinitions = (definitions: Record<string, any>, refs: string[]) => {
   return Object.keys(definitions).reduce((pruned: Record<string, any>, key) => {
     if (refs.includes(`#/definitions/${key}`)) {
       pruned[key] = definitions[key];
@@ -65,7 +58,7 @@ export const pruneDefinitions = (
 
 export type CompilerFunction = () => defs.JSONSchema;
 export type ValidatorFunction = <T>(
-  params?: schema_validator.CreateSchemaValidatorParams,
+  params?: schema_validator.CreateSchemaValidatorParams
 ) => schema_validator.SchemaValidator<T>;
 
 export type Compilers = {
@@ -88,14 +81,14 @@ export type WithCompilers<T> = Compilers & {
  */
 export const parseJSONSchema = <T extends defs.JSONSchema>(
   schema: T,
-  definitions = schema.definitions,
+  definitions = schema.definitions
 ): WithCompilers<T> => {
   return new Proxy(schema, {
     get(target: any, prop) {
       const compile: CompilerFunction = () => {
         const schema = {
           definitions: definitions,
-          ...target,
+          ...target
         };
 
         if (!schema.definitions) {
@@ -105,17 +98,17 @@ export const parseJSONSchema = <T extends defs.JSONSchema>(
         const used = findUsedRefs(schema);
         return {
           ...schema,
-          definitions: pruneDefinitions(schema.definitions, used),
+          definitions: pruneDefinitions(schema.definitions, used)
         };
       };
       const validator: ValidatorFunction = (options) => {
         return schema_validator.createSchemaValidator(compile(), options);
       };
 
-      if (prop === "compile") {
+      if (prop === 'compile') {
         return compile;
       }
-      if (prop === "validator") {
+      if (prop === 'validator') {
         return validator;
       }
 
@@ -124,11 +117,11 @@ export const parseJSONSchema = <T extends defs.JSONSchema>(
       if (Array.isArray(subschema)) {
         return subschema;
       }
-      if (typeof subschema !== "object") {
+      if (typeof subschema !== 'object') {
         return subschema;
       }
 
       return parseJSONSchema(subschema, definitions);
-    },
+    }
   });
 };
