@@ -1,0 +1,13 @@
+.idea/
+.vscode
+.DS_Store
+.swc
+
+node_modules
+coverage
+dist
+
+yarn-error.log
+.pnpm-debug.log
+
+tsconfig.tsbuildinfo

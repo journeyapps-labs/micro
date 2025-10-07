@@ -1,0 +1,17 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/codecs"
+    },
+    {
+      "path": "./packages/errors"
+    },
+    {
+      "path": "./packages/streaming"
+    },
+    {
+      "path": "./packages/schema"
+    }
+  ]
+}

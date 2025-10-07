@@ -1,0 +1,3 @@
+{
+  "reject": ["/@opentelemetry.*/", "chalk", "node-fetch", "@types/node-fetch"]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@journeyapps-labs/micro-streaming",
+  "main": "./dist/index",
+  "browser": "./dist/web",
+  "typings": "./dist/index",
+  "version": "1.0.0",
+  "repository": "https://github.com/journeyapps-labs/journey-micro",
+  "files": [
+    "dist/**"
+  ],
+  "exports": {
+    "node": "./dist/index.js",
+    "default": "./dist/web.js"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@journeyapps-labs/micro-errors": "workspace:^",
+    "@journeyapps-labs/micro-schema": "workspace:^",
+    "@types/express": "^4.17.14",
+    "bson": "^6.7.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "lodash": "^4.17.21",
+    "vitest": "^3.2.4"
+  }
+}

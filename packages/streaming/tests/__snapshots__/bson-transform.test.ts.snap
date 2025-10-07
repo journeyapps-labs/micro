@@ -1,0 +1,83 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`bson-transformer > end-to-end streaming 1`] = `
+[
+  {
+    "a": "b",
+  },
+  {
+    "c": "d",
+  },
+  {
+    "e": "f",
+  },
+]
+`;
+
+exports[`bson-transformer > it successfully deserializes streamed bson data 1`] = `
+[
+  {
+    "a": "b",
+  },
+  {
+    "c": "d",
+  },
+  {
+    "e": "f",
+  },
+]
+`;
+
+exports[`bson-transformer > it successfully serializes objects to bson stream 1`] = `
+{
+  "data": [
+    14,
+    0,
+    0,
+    0,
+    2,
+    97,
+    0,
+    2,
+    0,
+    0,
+    0,
+    98,
+    0,
+    0,
+    14,
+    0,
+    0,
+    0,
+    2,
+    99,
+    0,
+    2,
+    0,
+    0,
+    0,
+    100,
+    0,
+    0,
+    14,
+    0,
+    0,
+    0,
+    2,
+    101,
+    0,
+    2,
+    0,
+    0,
+    0,
+    102,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ],
+  "type": "Buffer",
+}
+`;

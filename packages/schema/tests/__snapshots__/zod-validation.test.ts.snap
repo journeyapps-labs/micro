@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`zod-validation > fails validation for runtime codec 1`] = `
+{
+  "errors": [
+    "{"_errors":[],"name":{"_errors":["Expected string, received number"]},"surname":{"_errors":["Required"]},"other":{"_errors":[],"a":{"_errors":["Required"]},"b":{"_errors":["Invalid literal value, expected \\"optional\\""]}}}",
+  ],
+  "valid": false,
+}
+`;
+
+exports[`zod-validation > passes validation for runtime codec 1`] = `
+{
+  "valid": true,
+}
+`;
