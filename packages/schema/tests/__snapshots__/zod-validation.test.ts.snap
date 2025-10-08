@@ -3,7 +3,7 @@
 exports[`zod-validation > fails validation for runtime codec 1`] = `
 {
   "errors": [
-    "{"_errors":[],"name":{"_errors":["Expected string, received number"]},"surname":{"_errors":["Required"]},"other":{"_errors":[],"a":{"_errors":["Required"]},"b":{"_errors":["Invalid literal value, expected \\"optional\\""]}}}",
+    "{"_errors":[],"name":{"_errors":["Invalid input: expected string, received number"]},"surname":{"_errors":["Invalid input: expected string, received undefined"]},"other":{"_errors":[],"a":{"_errors":["Invalid input: expected array, received undefined"]},"b":{"_errors":["Invalid input: expected \\"optional\\""]}}}",
   ],
   "valid": false,
 }

@@ -1,15 +1,18 @@
 import * as stream from '../core/cross-stream';
 import * as constants from './constants';
 import * as bson from 'bson';
+import { ReadableWritablePair } from 'stream/web';
 
 export type BSONStreamEncoderParams<T> = {
   serialize_options?: bson.SerializeOptions;
   sendTerminatorOnEnd?: boolean;
   writableStrategy?: QueuingStrategy<T | undefined>;
-  readableStrategy?: QueuingStrategy<Buffer | undefined>;
+  readableStrategy?: QueuingStrategy<Uint8Array | undefined>;
 };
 
-export const createBSONStreamEncoder = <T extends {} = any>(params?: BSONStreamEncoderParams<T>) => {
+export const createBSONStreamEncoder = <T extends {} = any>(
+  params?: BSONStreamEncoderParams<T>
+): ReadableWritablePair => {
   let readableStrategy = params?.readableStrategy;
   if (!readableStrategy) {
     readableStrategy = new stream.ByteLengthStrategy({
@@ -17,7 +20,7 @@ export const createBSONStreamEncoder = <T extends {} = any>(params?: BSONStreamE
     });
   }
 
-  return new stream.Transform<T, Buffer>(
+  return new stream.Transform<T, Uint8Array>(
     {
       transform(chunk, controller) {
         controller.enqueue(Buffer.from(bson.serialize(chunk, params?.serialize_options)));

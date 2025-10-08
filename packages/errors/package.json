@@ -20,7 +20,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@types/node": "^20.17.6",
+    "@types/node": "^24.7.0",
     "vitest": "^3.2.4"
   }
 }
