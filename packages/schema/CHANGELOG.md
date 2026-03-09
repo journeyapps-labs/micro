@@ -1,5 +1,13 @@
 # @journeyapps-labs/micro-schema
 
+## 1.0.2
+
+### Patch Changes
+
+- 6512c05: Moved development dependencies to devDependencies.
+- Updated dependencies [6512c05]
+  - @journeyapps-labs/micro-codecs@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
