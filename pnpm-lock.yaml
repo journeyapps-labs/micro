@@ -82,13 +82,13 @@ importers:
       '@journeyapps-labs/micro-schema':
         specifier: workspace:^
         version: link:../schema
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.3
       bson:
         specifier: ^6.10.4
         version: 6.10.4
     devDependencies:
-      '@types/express':
-        specifier: ^5.0.3
-        version: 5.0.3
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
